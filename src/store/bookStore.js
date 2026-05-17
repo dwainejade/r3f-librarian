@@ -1,20 +1,29 @@
 import { create } from 'zustand';
 
-const GENRES = ['fantasy', 'mystery', 'scifi', 'romance'];
+const GENRES = [
+  'fantasy', 'mystery', 'scifi', 'romance', 'thriller', 
+  'horror', 'history', 'biography', 'poetry', 'adventure'
+];
 
-function generateScatteredBooks(count = 15) {
+// High-performance pile scatter configuration
+function generateScatteredBooks(count = 3000) {
   const books = [];
+  const spawnRadius = 3.5;
+  const heightPerLayer = 0.08;
 
   for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const radius = Math.sqrt(Math.random()) * spawnRadius;
+    const posX = Math.cos(angle) * radius;
+    const posZ = Math.sin(angle) * radius;
+    const posY = 1.0 + i * heightPerLayer;
+
     books.push({
-      id: i + 1,
-      name: `Vol ${i + 1}`,
-      genre: GENRES[Math.floor(Math.random() * GENRES.length)],
-      position: [
-        (Math.random() - 0.5) * 20,
-        Math.random() * 3,
-        (Math.random() - 0.5) * 20
-      ],
+      id: `test-book-${i}`,
+      name: `Book_${i}`,
+      // 🚀 Cycles through all 10 genres cleanly now!
+      genre: GENRES[i % GENRES.length], 
+      position: [posX, posY, posZ],
       collected: false
     });
   }
@@ -23,7 +32,7 @@ function generateScatteredBooks(count = 15) {
 }
 
 export const useBookStore = create((set) => ({
-  allBooks: generateScatteredBooks(),
+  allBooks: generateScatteredBooks(1000), // Populates 3,000 books instantly
   collectedBooks: [],
   hoveredObjectName: null,
 
@@ -47,12 +56,11 @@ export const useBookStore = create((set) => ({
       )
     })),
 
-  setHoveredObjectName: (name) =>
-    set({ hoveredObjectName: name }),
+  setHoveredObjectName: (name) => set({ hoveredObjectName: name }),
 
   resetBooks: () =>
     set({
-      allBooks: generateScatteredBooks(),
+      allBooks: generateScatteredBooks(3000),
       collectedBooks: []
     })
 }));
