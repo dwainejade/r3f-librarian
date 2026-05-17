@@ -9,7 +9,6 @@ export default function FirstPersonCamera({ position = [0, 1.6, 5] }) {
   const euler = useRef(new THREE.Euler(0, 0, 0, 'YXZ'));
   const velocity = useRef(new THREE.Vector3());
   const setHoveredObjectName = useBookStore((state) => state.setHoveredObjectName);
-  const hoveredObjectName = useBookStore((state) => state.hoveredObjectName);
 
   const SPEED = 0.05;
   const MOUSE_SENSITIVITY = 0.005;
@@ -91,7 +90,6 @@ export default function FirstPersonCamera({ position = [0, 1.6, 5] }) {
       // 3. The first object in the array is closest to the camera
       const closestObject = intersects[0].object;
       setHoveredObjectName(closestObject.name);
-      console.log({hoveredObjectName});
     } else {
       setHoveredObjectName(null);
     }

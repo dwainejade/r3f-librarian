@@ -8,7 +8,6 @@ export default function Book({ book, isSelected, validation, onSelect, onPickup 
   const meshRef = useRef();
   const hoveredObjectName = useBookStore((state) => state.hoveredObjectName);
   const isHovered = hoveredObjectName === book.name;
-  console.log({isHovered})
 
   useFrame(() => {
     if (!meshRef.current) return;
@@ -46,6 +45,8 @@ export default function Book({ book, isSelected, validation, onSelect, onPickup 
     }
   };
 
+  isHovered ? console.log(`Hovering over: ${book.name}`) : null;
+
   return (
     <mesh
       ref={meshRef}
@@ -59,7 +60,7 @@ export default function Book({ book, isSelected, validation, onSelect, onPickup 
         emissive={0x000000}
         emissiveIntensity={0}
       />
-      {isHovered && <Outlines color="white" thickness={0.01} />}
+      {isHovered && <Outlines color="white" thickness={4} />}
     </mesh>
   );
 }

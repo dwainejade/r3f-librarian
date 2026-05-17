@@ -1,5 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import FirstPersonCamera from './FirstPersonCamera';
+import { Sky } from '@react-three/drei';
 import Books from './Books';
 import InventoryUI from './InventoryUI';
 import { useBookStore } from '../store/bookStore';
@@ -25,7 +26,7 @@ export default function Scene() {
       <Canvas camera={{ position: [0, 1.6, 5], fov: 75 }}>
         <ambientLight intensity={0.8} />
         <directionalLight position={[10, 10, 10]} intensity={1} />
-        <color attach="background" args={['#87CEEB']} />
+        <Sky sunPosition={[120, 200, 100]} />
 
         <FirstPersonCamera position={[0, 1.6, 5]} />
         <Books books={visibleBooks} onBookPlaced={handleBookPlaced} onPickup={handlePickupBook} />
